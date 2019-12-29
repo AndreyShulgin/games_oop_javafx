@@ -26,7 +26,7 @@ public class Logic {
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+            if (steps.length > 0 && steps[steps.length - 1].equals(dest) && notFigure(steps)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
@@ -47,6 +47,18 @@ public class Logic {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
                 rst = index;
                 break;
+            }
+        }
+        return rst;
+    }
+
+    private boolean notFigure(Cell[] steps) {
+        boolean rst = true;
+        for (Cell step : steps) {
+            for (Figure figure : figures) {
+                if (figure != null && step == figure.position()) {
+                    rst = false;
+                }
             }
         }
         return rst;
